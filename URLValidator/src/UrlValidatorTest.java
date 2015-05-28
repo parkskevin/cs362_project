@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 import junit.framework.TestCase;
 
+
 /**
  * Performs Validation Test for url validations.
  *
@@ -53,10 +54,25 @@ public class UrlValidatorTest extends TestCase {
 	   }
    }
    
-   
+   /**
+    *  Creates a set of URI schemes to test with
+    *  list from: http://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml
+    */
    public void testYourFirstPartition()
    {
-	   
+	   UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
+	   ArrayList<String> schemas = this.CreateStringList("src/Schemas.txt");
+	   String resource = "://www.example.com";
+	   ArrayList<ResultPair> schemaUrls = new ArrayList<ResultPair>();
+	   for(String schema : schemas)
+	   {
+		   ResultPair pair = new ResultPair(schema + resource, true);
+		   schemaUrls.add(pair);
+	   }
+	   for(ResultPair pair : schemaUrls)
+	   {
+		   this.testResultPair(pair, urlVal);
+	   }
    }
    
    public void testYourSecondPartition(){
@@ -130,5 +146,28 @@ public class UrlValidatorTest extends TestCase {
    {
 	   assertEquals(result.item, urlVal.isValid(result.item), result.valid);
 	   System.out.println(result.item + " PASS");
+   }
+   
+   /**
+    * Grabs a line separated list of data from a file
+    * @param filepath
+    * @return
+    */
+   private ArrayList<String> CreateStringList(String filepath)
+   {
+	   ArrayList<String> results = new ArrayList<String>();
+	   try {
+			File file = new File(filepath);
+			FileReader fileReader = new FileReader(file);
+			BufferedReader bufferedReader = new BufferedReader(fileReader);
+			String line;
+			while ((line = bufferedReader.readLine()) != null) {
+				results.add(line);
+			}
+			fileReader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	   return results;
    }
 }
