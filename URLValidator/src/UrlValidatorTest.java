@@ -18,8 +18,10 @@
 
 import java.io.*;
 import java.util.ArrayList;
-
-import junit.framework.TestCase;
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.ErrorCollector;
+import static org.hamcrest.CoreMatchers.equalTo;
 
 
 /**
@@ -27,30 +29,26 @@ import junit.framework.TestCase;
  *
  * @version $Revision: 1128446 $ $Date: 2011-05-27 13:29:27 -0700 (Fri, 27 May 2011) $
  */
-public class UrlValidatorTest extends TestCase {
+public class UrlValidatorTest {
 
-   private boolean printStatus = false;
-   private boolean printIndex = false;//print index that indicates current scheme,host,port,path, query test were using.
-
-   public UrlValidatorTest(String testName) {
-      super(testName);
-   }
-
+   @Rule
+   public ErrorCollector collector = new ErrorCollector();
    
    /**
     * Performs a manual test of URLs by reading from a text file
     */
+   @Test
    public void testManualTest()
    {
 	   UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
 	   //sanity check
 	   ResultPair sane = new ResultPair("http://www.amazon.com", true);
-	   this.testResultPair(sane, urlVal);
+	   collector.checkThat(sane.item, sane.valid, equalTo(urlVal.isValid(sane.item)));
 	   //test from files by creating ResultPairs, then looping on them
 	   ArrayList<ResultPair> fileUrls = this.createPairsFromFile("src/UrlsToVerify.txt");
 	   for(ResultPair res : fileUrls)
 	   {
-		   this.testResultPair(res, urlVal);
+		   collector.checkThat(res.item, res.valid, equalTo(urlVal.isValid(res.item)));
 	   }
    }
    
@@ -58,6 +56,7 @@ public class UrlValidatorTest extends TestCase {
     *  Creates a set of URI schemes to test with
     *  list from: http://www.iana.org/assignments/uri-schemes/uri-schemes.xhtml
     */
+   @Test
    public void testYourFirstPartition()
    {
 	   UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
@@ -71,15 +70,16 @@ public class UrlValidatorTest extends TestCase {
 	   }
 	   for(ResultPair pair : schemaUrls)
 	   {
-		   this.testResultPair(pair, urlVal);
+		   collector.checkThat(pair.valid, equalTo(urlVal.isValid(pair.item)));
 	   }
    }
    
+   @Test
    public void testYourSecondPartition(){
 	   
    }
    
-   
+   @Test
    public void testIsValid()
    {
 	   for(int i = 0;i<10000;i++)
@@ -88,6 +88,7 @@ public class UrlValidatorTest extends TestCase {
 	   }
    }
    
+   @Test
    public void testAnyOtherUnitTest()
    {
 	   
@@ -135,17 +136,6 @@ public class UrlValidatorTest extends TestCase {
 			e.printStackTrace();
 		}
 	return results;
-   }
-   
-   /**
-    * Tests a ResultPair against a UrlValidator
-    * @param result
-    * @param urlVal
-    */
-   private void testResultPair(ResultPair result, UrlValidator urlVal)
-   {
-	   assertEquals(result.item, urlVal.isValid(result.item), result.valid);
-	   System.out.println(result.item + " PASS");
    }
    
    /**
