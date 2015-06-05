@@ -71,18 +71,18 @@ public class UrlValidatorTest {
 	   //test each now full URL
 	   for(ResultPair pair : schemaUrls)
 	   {
-		   collector.checkThat(pair.valid, equalTo(urlVal.isValid(pair.item)));
+		   collector.checkThat(pair.item, pair.valid, equalTo(urlVal.isValid(pair.item)));
 	   }
    }
    
    @Test
    public void testYourSecondPartition(){
 
-		boolean result;
+//		boolean result;
 
 		UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
 
-		System.out.println("\n########  SECOND INPUT PARTITION TEST BEGIN #########\n");
+//		System.out.println("\n########  SECOND INPUT PARTITION TEST BEGIN #########\n");
 
 		String testURL = "http://www.google.";
 
@@ -106,8 +106,11 @@ public class UrlValidatorTest {
 		"US","UY","UZ","VA","VC","VE","VG","VI","VN","VU","WF","WS","YE","YT","ZA","ZM","ZW"};
 
 		for(int i = 0 ; i < cuntryCodez.length ; i++){
-			result = urlVal.isValid(testURL + cuntryCodez[i]); //Loops and appends a new country code to google for each test.
-			System.out.println(testURL + cuntryCodez[i] + " : " + result + " : expected result: True.");	   
+			ResultPair result = new ResultPair(testURL + cuntryCodez[i], true);
+			collector.checkThat(result.item, result.valid, equalTo(urlVal.isValid(result.item)));
+//			result = urlVal.isValid(testURL + cuntryCodez[i]); //Loops and appends a new country code to google for each test.
+//			System.out.println(testURL + cuntryCodez[i] + " : " + result + " : expected result: True.");
+		}
    }
    
    @Test
