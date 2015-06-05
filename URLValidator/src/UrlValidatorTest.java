@@ -133,21 +133,21 @@ public class UrlValidatorTest {
 	   String fixedString = "http://";
 	   
 	   testPair[] IPv4List = 
-	   {																		// test #
-			   new testPair(fixedString + testThis		, testForValid),	// quick test check
-			   new testPair(fixedString + ""					, false),			// 1
-			   new testPair(fixedString + "..."				, false),			// 2
-			   new testPair(fixedString + "0.0.0.0"			, true),			// 3
-			   new testPair(fixedString + "72.236.137.36"		, true),			// 4
-			   new testPair(fixedString + "255.255.255.255"	, true),			// 5
-			   new testPair(fixedString + "256.0.0.0"		, false),			// 6
-			   new testPair(fixedString + "0.256.0.0"		, false),			// 7
-			   new testPair(fixedString + "0.0.256.0"		, false),			// 8
-			   new testPair(fixedString + "0.0.0.256"		, false),			// 9
-			   new testPair(fixedString + "abc.0.0.0"		, false),			// 10
-			   new testPair(fixedString + "0.abc.0.0"		, false),			// 11
-			   new testPair(fixedString + "0.0.abc.0"		, false),			// 12
-			   new testPair(fixedString + "0.0.0.abc"		, false)			// 13
+	   {		
+			   new testPair(fixedString + testThis, testForValid),
+			   new testPair(fixedString + "", false),
+			   new testPair(fixedString + "...", false),
+			   new testPair(fixedString + "0.0.0.0", true),	
+			   new testPair(fixedString + "72.236.137.36", true),
+			   new testPair(fixedString + "255.255.255.255", true),	
+			   new testPair(fixedString + "256.0.0.0", false),
+			   new testPair(fixedString + "0.256.0.0", false),
+			   new testPair(fixedString + "0.0.256.0", false),
+			   new testPair(fixedString + "0.0.0.256", false),
+			   new testPair(fixedString + "abc.0.0.0", false),
+			   new testPair(fixedString + "0.abc.0.0", false),
+			   new testPair(fixedString + "0.0.abc.0", false),
+			   new testPair(fixedString + "0.0.0.abc", false)
 	   };
 	
 		if (displayResults == true)	{	displayResults(urlVal, IPv4List, "IPv4 Tests");	}
