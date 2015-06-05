@@ -123,10 +123,40 @@ public class UrlValidatorTest {
    }
    
    @Test
-   public void testAnyOtherUnitTest()
-   {
+   public void test_IPv4()
+  {
+	   urlValidator urlVal = new urlValidator(null, null, urlValidator.ALLOW_ALL_SCHEMES);
 	   
-   }
+	   String testThis = "Test";	// string to test for any scheme
+	   boolean testForValid = false; 	// test item is expected to be either [true or false]
+	   
+	   String fixedString = "http://";
+	   
+	   testPair[] IPv4List = 
+	   {																		// test #
+			   new testPair(fixedString + testThis		, testForValid),	// quick test check
+			   new testPair(fixedString + ""					, false),			// 1
+			   new testPair(fixedString + "..."				, false),			// 2
+			   new testPair(fixedString + "0.0.0.0"			, true),			// 3
+			   new testPair(fixedString + "72.236.137.36"		, true),			// 4
+			   new testPair(fixedString + "255.255.255.255"	, true),			// 5
+			   new testPair(fixedString + "256.0.0.0"		, false),			// 6
+			   new testPair(fixedString + "0.256.0.0"		, false),			// 7
+			   new testPair(fixedString + "0.0.256.0"		, false),			// 8
+			   new testPair(fixedString + "0.0.0.256"		, false),			// 9
+			   new testPair(fixedString + "abc.0.0.0"		, false),			// 10
+			   new testPair(fixedString + "0.abc.0.0"		, false),			// 11
+			   new testPair(fixedString + "0.0.abc.0"		, false),			// 12
+			   new testPair(fixedString + "0.0.0.abc"		, false)			// 13
+	   };
+	
+		if (displayResults == true)	{	displayResults(urlVal, IPv4List, "IPv4 Tests");	}
+		
+		for(int i = 0; i < IPv4List.length; i++)
+		{
+			assertEquals(urlVal.isValid(IPv4List[i].item), IPv4List[i].valid);
+		}
+  }
    /**
     * Create set of tests by taking the testUrlXXX arrays and
     * running through all possible permutations of their combinations.
