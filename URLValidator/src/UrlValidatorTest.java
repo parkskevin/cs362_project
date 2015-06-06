@@ -161,6 +161,7 @@ public class UrlValidatorTest {
 	   fileUrls.add(new ResultPair("http://site.com/#citation", true));
 	   fileUrls.add(new ResultPair("ftp://site.com", true));
 	   fileUrls.add(new ResultPair("http://site.com/hyphen-here", true));
+	   fileUrls.add(new ResultPair("http://www.example.com:8080", true));
 	   fileUrls.add(new ResultPair("foo://example.com:8042/over/there?name=ferret#nose", true));
 	   fileUrls.add(new ResultPair("http://user@example.com", true));
 	   fileUrls.add(new ResultPair("http://142.10.5.2:8080/", true));
