@@ -78,11 +78,7 @@ public class UrlValidatorTest {
    @Test
    public void testYourSecondPartition(){
 
-//		boolean result;
-
 		UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
-
-//		System.out.println("\n########  SECOND INPUT PARTITION TEST BEGIN #########\n");
 
 		String testURL = "http://www.google.";
 
@@ -108,62 +104,42 @@ public class UrlValidatorTest {
 		for(int i = 0 ; i < cuntryCodez.length ; i++){
 			ResultPair result = new ResultPair(testURL + cuntryCodez[i], true);
 			collector.checkThat(result.item, result.valid, equalTo(urlVal.isValid(result.item)));
-//			result = urlVal.isValid(testURL + cuntryCodez[i]); //Loops and appends a new country code to google for each test.
-//			System.out.println(testURL + cuntryCodez[i] + " : " + result + " : expected result: True.");
 		}
-   }
-   
-   @Test
-   public void testIsValid()
-   {
-	   for(int i = 0;i<10000;i++)
-	   {
-		   
-	   }
    }
    
    @Test
    public void test_IPv4()
   {
-	   urlValidator urlVal = new urlValidator(null, null, urlValidator.ALLOW_ALL_SCHEMES);
+	   UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
 	   
 	   String testThis = "Test";	// string to test for any scheme
 	   boolean testForValid = false; 	// test item is expected to be either [true or false]
 	   
 	   String fixedString = "http://";
 	   
-	   testPair[] IPv4List = 
+	   ResultPair[] IPv4List = 
 	   {		
-			   new testPair(fixedString + testThis, testForValid),
-			   new testPair(fixedString + "", false),
-			   new testPair(fixedString + "...", false),
-			   new testPair(fixedString + "0.0.0.0", true),	
-			   new testPair(fixedString + "72.236.137.36", true),
-			   new testPair(fixedString + "255.255.255.255", true),	
-			   new testPair(fixedString + "256.0.0.0", false),
-			   new testPair(fixedString + "0.256.0.0", false),
-			   new testPair(fixedString + "0.0.256.0", false),
-			   new testPair(fixedString + "0.0.0.256", false),
-			   new testPair(fixedString + "abc.0.0.0", false),
-			   new testPair(fixedString + "0.abc.0.0", false),
-			   new testPair(fixedString + "0.0.abc.0", false),
-			   new testPair(fixedString + "0.0.0.abc", false)
+			   new ResultPair(fixedString + testThis, testForValid),
+			   new ResultPair(fixedString + "", false),
+			   new ResultPair(fixedString + "...", false),
+			   new ResultPair(fixedString + "0.0.0.0", true),	
+			   new ResultPair(fixedString + "72.236.137.36", true),
+			   new ResultPair(fixedString + "255.255.255.255", true),	
+			   new ResultPair(fixedString + "256.0.0.0", false),
+			   new ResultPair(fixedString + "0.256.0.0", false),
+			   new ResultPair(fixedString + "0.0.256.0", false),
+			   new ResultPair(fixedString + "0.0.0.256", false),
+			   new ResultPair(fixedString + "abc.0.0.0", false),
+			   new ResultPair(fixedString + "0.abc.0.0", false),
+			   new ResultPair(fixedString + "0.0.abc.0", false),
+			   new ResultPair(fixedString + "0.0.0.abc", false)
 	   };
-	
-		if (displayResults == true)	{	displayResults(urlVal, IPv4List, "IPv4 Tests");	}
 		
 		for(int i = 0; i < IPv4List.length; i++)
 		{
-			assertEquals(urlVal.isValid(IPv4List[i].item), IPv4List[i].valid);
+			collector.checkThat(IPv4List[i].item, IPv4List[i].valid, equalTo(urlVal.isValid(IPv4List[i].item)));
 		}
   }
-   /**
-    * Create set of tests by taking the testUrlXXX arrays and
-    * running through all possible permutations of their combinations.
-    *
-    * @param testObjects Used to create a url.
-    */
-
    
    /**
     * Initializes manual URLs for testing, not expected to be used elsewhere
