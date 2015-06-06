@@ -57,7 +57,7 @@ public class UrlValidatorTest {
     *  
     */
    @Test
-   public void testYourFirstPartition()
+   public void testPartitionOne()
    {
 	   UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
 	   String resource = "://www.example.com";
@@ -76,7 +76,7 @@ public class UrlValidatorTest {
    }
    
    @Test
-   public void testYourSecondPartition(){
+   public void testPartitionTwo(){
 
 		UrlValidator urlVal = new UrlValidator(null, null, UrlValidator.ALLOW_ALL_SCHEMES);
 
@@ -162,6 +162,9 @@ public class UrlValidatorTest {
 	   fileUrls.add(new ResultPair("ftp://site.com", true));
 	   fileUrls.add(new ResultPair("http://site.com/hyphen-here", true));
 	   fileUrls.add(new ResultPair("http://www.example.com:8080", true));
+	   fileUrls.add(new ResultPair("foo://example.com:80/over/there?name=ferret#nose", true));
+	   fileUrls.add(new ResultPair("foo://example.com:80/over/there#nose", true));
+	   fileUrls.add(new ResultPair("foo://example.com/there?name=ferret", true));
 	   fileUrls.add(new ResultPair("foo://example.com:8042/over/there?name=ferret#nose", true));
 	   fileUrls.add(new ResultPair("http://user@example.com", true));
 	   fileUrls.add(new ResultPair("http://142.10.5.2:8080/", true));
